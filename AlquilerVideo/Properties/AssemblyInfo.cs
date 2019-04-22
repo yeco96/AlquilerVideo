@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("AlquilerVideo")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Microsoft")]
+[assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("AlquilerVideo")]
-[assembly: AssemblyCopyright("Copyright © Microsoft 2019")]
+[assembly: AssemblyCopyright("Copyright ©  2019")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // El siguiente GUID sirve como ID de typelib si este proyecto se expone a COM
-[assembly: Guid("3d978fc6-fedf-48f3-9308-c5998b0c0df1")]
+[assembly: Guid("f120ca0e-2d04-41a4-ba50-fa683150c075")]
 
 // La información de versión de un ensamblado consta de los siguientes cuatro valores:
 //
