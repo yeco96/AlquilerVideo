@@ -36,5 +36,13 @@ namespace AlquilerVideo.BD
             }
         }
 
+        public IMongoCollection<Transaccion> Transaccion
+        {
+            get
+            {
+                return (contexto.database.GetCollection<Transaccion>("Transaccion"));
+            }
+        }
+
     }
 }
