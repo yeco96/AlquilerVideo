@@ -1,0 +1,22 @@
+﻿using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
+using MongoDB.Bson.Serialization.IdGenerators;
+using System;
+using System.Collections.Generic;
+
+namespace AlquilerVideo.Models
+{
+    public class Transaccion
+    {
+        [BsonId(IdGenerator = typeof(StringObjectIdGenerator))]
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string _id { get; set; }
+        public DateTime fechaTransaccion { get; set; }
+        public DateTime fechaRegreso { get; set; }
+        public string tipoMovimiento { get; set; }
+        public UsuarioRegistra usuarioRegistra { get; set; }
+        public List<Pelicula> detallePelicula { get; set; }
+        public Cliente cliente { get; set; }
+
+    }
+}
