@@ -1,11 +1,16 @@
 ﻿using AlquilerVideo.BD;
 using AlquilerVideo.Models;
 using MongoDB.Driver;
+using MongoDB.Bson;
+using AlquilerVideo.Models;
+using AlquilerVideo.Controllers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using MongoDB.Driver.Linq;
+using PagedList;
 
 namespace AlquilerVideo.Controllers
 {
@@ -26,8 +31,6 @@ namespace AlquilerVideo.Controllers
         public ActionResult LasPeliculas(string id)
         {
             var transacciones = datos.Transaccion;
-            //var filter = Builders<Animales>.Filter.Eq(x => x._id, id);
-
             var laTransaccion = transacciones.Find<Transaccion>(a => a._id == id).FirstOrDefault();
             return View(laTransaccion.detallePelicula);
         }
@@ -41,9 +44,6 @@ namespace AlquilerVideo.Controllers
         // GET: Pelicula/Create
         public ActionResult Index(string sortOrder, string searchString, string currentFilter, int? page)
         {
-            ViewBag.CurrentSort = sortOrder;
-            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
-            ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
             if (searchString != null)
             {
                 page = 1;
@@ -55,16 +55,17 @@ namespace AlquilerVideo.Controllers
             ViewBag.CurrentFilter = searchString;
             int pageSize = 3;
             int pageNumber = (page ?? 1);
-            ViewBag.SearchString = searchString;
             var trans = datos.Transaccion;
             var lasTransacciones = trans.AsQueryable();
 
-
             if (!String.IsNullOrEmpty(searchString))
             {
-                lasTransacciones = lasTransacciones.Where(s => s.tipoMovimiento.ToUpper().Contains(searchString.ToUpper()) ||
-                                                     s.fechaTransaccion.Equals(DateTime.Parse(searchString)));
+                lasTransacciones = lasTransacciones.Where(e => e.tipoMovimiento.ToUpper().Contains(searchString.ToUpper()));
             }
+            
+            ViewBag.SearchString = searchString;
+
+
             List < Pelicula > listaPeliculas = datos.Pelicula.Find(e => true).ToList();
             var _pelicula = datos.Pelicula;
             var peliculas = _pelicula.AsQueryable();
@@ -76,18 +77,16 @@ namespace AlquilerVideo.Controllers
             {
                 ViewBag.peliculasList = TempData["detallePelicula"];
             }
-
-
             List<SelectListItem> listaTitulos = new List<SelectListItem>();
             foreach (Pelicula pelicula in listaPeliculas)
             {
                 listaTitulos.Add(new SelectListItem() { Text = pelicula.titulo, Value = pelicula._id});
             }
-
             ViewData["fechaActual"] = DateTime.Now.ToString();
             SelectList mostrar = new SelectList(listaTitulos, "Value", "Text", 2);
             ViewBag.peliculas = mostrar;
-            return View(transacciones2.ToPagedList(pageNumber, pageSize));
+
+            return View();
         }
 
         // POST: Pelicula/Create
@@ -128,10 +127,9 @@ namespace AlquilerVideo.Controllers
                 }
                
                 Peliculas = (List<Pelicula>) TempData["detallePelicula"];
-
                 Peliculas.Add(laPelicuala);
                 TempData["detallePelicula"] = Peliculas;
-
+                //datos.Transaccion.InsertOne();
                 return RedirectToAction("Index");
             }
             catch
@@ -139,6 +137,7 @@ namespace AlquilerVideo.Controllers
                 return View();
             }
         }
+
 
         // POST: Pelicula/Edit/5
         [HttpPost]

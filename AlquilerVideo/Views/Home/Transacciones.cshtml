@@ -1,30 +1,43 @@
 ﻿@model IEnumerable<AlquilerVideo.Models.Transaccion>
-
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" />
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Transacciones";
 }
 
 <h2>Index</h2>
-@using (Html.BeginForm("Index", "Home", FormMethod.Get))
+<p>
+    @Html.ActionLink("Create New", "Transacciones")
+</p>
+@using (Html.BeginForm())
 {
+    string elSearchString = string.Empty;
+    if (!string.IsNullOrEmpty(ViewBag.SearchString))
+    {
+        elSearchString = ViewBag.SearchString;
+    }
     <p>
-        Find by name: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+        Find by name: @Html.TextBox("SearchString",
+       elSearchString, new { @placeholder = "Search criteria..." } )
         <input type="submit" value="Search" />
     </p>
 }
+
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model._id)
+            Id
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.fechaTransaccion)
+            Fecha transaccion
+            @*@Html.ActionLink("Fecha Transaccion", "Index", new { sortOrder = ViewBag.DateSortParm, currentFilter = ViewBag.CurrentFilter })*@
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.fechaRegreso)
+            Fecha regreso
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.tipoMovimiento)
+            Tipo movimiento
+            @* @Html.ActionLink("Tipo de movimiento", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })*@
         </th>
         <th></th>
     </tr>
@@ -51,3 +64,4 @@
     }
 
 </table>
+
