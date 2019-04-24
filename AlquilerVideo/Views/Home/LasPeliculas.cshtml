@@ -1,0 +1,59 @@
+﻿@model IEnumerable<AlquilerVideo.Models.Pelicula>
+@using AlquilerVideo.Models
+@{
+    ViewBag.Title = "LasPeliculas";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>LasPeliculas</h2>
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.titulo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.director)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.anno)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.genero)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.mayorEdad)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.titulo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.director)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.anno)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.genero)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.mayorEdad)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+        </td>
+    </tr>
+    }
+
+</table>
+

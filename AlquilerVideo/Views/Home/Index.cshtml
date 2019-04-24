@@ -23,15 +23,15 @@
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-
+        <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
         <div>
             <div class="row">
                 <div class="col-xs-4 ">
                     <div class="form-group">
                         @*@Html.LabelFor(model => model.fechaRegreso, htmlAttributes: new { @class = "control-label col-md-2" })*@
                         <div class="">
-                            @Html.EditorFor(model => model.fechaRegreso, new { htmlAttributes = new { @class = "form-control", placeholder = "Fecha Alquiler" } })
-                            @Html.ValidationMessageFor(model => model.fechaRegreso, "", new { @class = "text-danger" })
+                            @Html.EditorFor(model => model.fechaTransaccion, new { htmlAttributes = new { @class = "form-control", Value = @ViewData["fechaActual"], @type = "date" } })
+                            @Html.ValidationMessageFor(model => model.fechaTransaccion, "", new { @class = "text-danger" })
                         </div>
                     </div>
                 </div>
@@ -165,29 +165,30 @@
 
     @foreach (Pelicula item in ViewBag.peliculasList)
     {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.titulo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.genero)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.anno)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.precio)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.director)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.mayorEdad)
-            </td>
-            <td>
-                @Html.ActionLink("Borrar", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
-        </tr>
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.titulo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.genero)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.anno)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.precio)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.director)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.mayorEdad)
+        </td>
+        <td>
+            @Html.ActionLink("Borrar", "Delete", new { /* id=item.PrimaryKey */ })
+        </td>
+        
+    </tr>
     }
 
 </table>

@@ -12,7 +12,7 @@ namespace AlquilerVideo.Controllers
     public class HomeController : Controller
     {
         private Datos datos = new Datos();
-//        private static List<Pelicula> detalle = new List<Pelicula>();
+        //        private static List<Pelicula> detalle = new List<Pelicula>();
 
         // GET: Pelicula
         public ActionResult Transacciones()
@@ -23,6 +23,14 @@ namespace AlquilerVideo.Controllers
 
             return View(alquileres);
         }
+        public ActionResult LasPeliculas(string id)
+        {
+            var transacciones = datos.Transaccion;
+            //var filter = Builders<Animales>.Filter.Eq(x => x._id, id);
+
+            var laTransaccion = transacciones.Find<Transaccion>(a => a._id == id).FirstOrDefault();
+            return View(laTransaccion.detallePelicula);
+        }
 
         // GET: Pelicula/Details/5
         public ActionResult Details(int id)
@@ -31,9 +39,33 @@ namespace AlquilerVideo.Controllers
         }
 
         // GET: Pelicula/Create
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder, string searchString, string currentFilter, int? page)
         {
-            List<Pelicula> listaPeliculas = datos.Pelicula.Find(e => true).ToList();
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+            ViewBag.CurrentFilter = searchString;
+            int pageSize = 3;
+            int pageNumber = (page ?? 1);
+            ViewBag.SearchString = searchString;
+            var trans = datos.Transaccion;
+            var lasTransacciones = trans.AsQueryable();
+
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                lasTransacciones = lasTransacciones.Where(s => s.tipoMovimiento.ToUpper().Contains(searchString.ToUpper()) ||
+                                                     s.fechaTransaccion.Equals(DateTime.Parse(searchString)));
+            }
+            List < Pelicula > listaPeliculas = datos.Pelicula.Find(e => true).ToList();
             var _pelicula = datos.Pelicula;
             var peliculas = _pelicula.AsQueryable();
             if(TempData["detallePelicula"] == null)
@@ -51,11 +83,11 @@ namespace AlquilerVideo.Controllers
             {
                 listaTitulos.Add(new SelectListItem() { Text = pelicula.titulo, Value = pelicula._id});
             }
-            
 
+            ViewData["fechaActual"] = DateTime.Now.ToString();
             SelectList mostrar = new SelectList(listaTitulos, "Value", "Text", 2);
             ViewBag.peliculas = mostrar;
-            return View();
+            return View(transacciones2.ToPagedList(pageNumber, pageSize));
         }
 
         // POST: Pelicula/Create
