@@ -1,51 +1,198 @@
-﻿@model IEnumerable<AlquilerVideo.Models.Transaccion>
+﻿@model AlquilerVideo.Models.Transaccion
+@using AlquilerVideo.Models
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Insertar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Insertar")
-</p>
+@using (Html.BeginForm())
+{
+    SelectList generos = ViewBag.generos;
+}
+
+@{
+    TempData.Keep("detallePelicula");
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+        <div>
+            <div class="row">
+                <div class="col-xs-4 ">
+                    <div class="form-group">
+                        @*@Html.LabelFor(model => model.fechaRegreso, htmlAttributes: new { @class = "control-label col-md-2" })*@
+                        <div class="">
+                            @Html.EditorFor(model => model.fechaRegreso, new { htmlAttributes = new { @class = "form-control", placeholder = "Fecha Alquiler" } })
+                            @Html.ValidationMessageFor(model => model.fechaRegreso, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-4">
+                    <div class="form-group">
+                        @*@Html.LabelFor(model => model.tipoMovimiento, htmlAttributes: new { @class = "control-label col-md-2" })*@
+                        <div class="">
+                            @Html.EditorFor(model => model.tipoMovimiento, new { htmlAttributes = new { @class = "form-control", placeholder = "Tipo Movimiento" } })
+                            @Html.ValidationMessageFor(model => model.tipoMovimiento, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-4">
+                    <div class="form-group">
+                        <div class="col-md-offset-10 col-md-2">
+                            <input type="submit" value="Facturar" class="btn btn-default" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+       </div>
+
+        @*<div class="row">
+            <div class="col-xs-4 ">
+             
+
+                <div class="form-group">
+
+                    <div class="">
+                        @Html.DropDownList("tempPelicula",
+                          (SelectList) ViewBag.peliculas,
+                           new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.tempPelicula, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                @Html.ValueFor(model => model.tempPelicula)
+            
+
+            </div>
+            <div class="col-xs-4 ">
+                <div class="form-group">
+                    <div>
+                        <input type="button" value="Agregar Pelicula" class="btn btn-default" onclick="location.href='@Url.Action("AgregarDetalle", "Home", new { collection = Model })'" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-4 ">
+            </div>
+        </div>
+    </div>*@
+
+}
+
+
+@using (Html.BeginForm("AgregarDetalle", "Home", new { }, FormMethod.Get))
+{
+    <div class="row">
+        <div class="col-xs-4">
+            @*<div class="form-group">
+                    @Html.LabelFor(model => model.detallePelicula, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="">
+                        @Html.DropDownList("Pelicula",
+                          (SelectList) ViewBag.peliculas,
+                           new { @class = "form-control" })
+                    </div>
+                </div>*@
+
+            <div class="form-group">
+
+                <div class="">
+                    @Html.DropDownList("tempPelicula",
+                      (SelectList) ViewBag.peliculas,
+                       new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.tempPelicula, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            @Html.ValueFor(model => model.tempPelicula)
+            @*@Model.tempPelicula*@
+
+        </div>
+        <div class="col-xs-4 ">
+            <div class="form-group">
+                <div>
+                    <input type="submit" value="Agregar Pelicula" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-4 ">
+            <div class="form-group">
+                <div>
+                    <input type="button" value="Borrar Detalle" class="btn btn-default" onclick="location.href='@Url.Action("borrarDetalle", "Home")'" />
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+}
+
+
+
+<h2>Detalle Transacción</h2>
 <table class="table">
+
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model._id)
+            Titulo
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.fechaTransaccion)
+            Genero
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.fechaRegreso)
+            Año
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.tipoMovimiento)
+            Precio
+        </th>
+        <th>
+            Director
+        </th>
+        <th>
+            Mayor de Edad
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item._id)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.fechaTransaccion)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.fechaRegreso)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.tipoMovimiento)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-        </td>
-    </tr>
-}
+
+
+    @foreach (Pelicula item in ViewBag.peliculasList)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.titulo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.genero)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.anno)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.precio)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.director)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.mayorEdad)
+            </td>
+            <td>
+                @Html.ActionLink("Borrar", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+    }
 
 </table>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -12,10 +12,10 @@ namespace AlquilerVideo.Controllers
     public class HomeController : Controller
     {
         private Datos datos = new Datos();
-        List<Pelicula> pelis = new List<Pelicula>();
+//        private static List<Pelicula> detalle = new List<Pelicula>();
 
         // GET: Pelicula
-        public ActionResult Index()
+        public ActionResult Transacciones()
         {
 
             var _alquiler = datos.Transaccion;
@@ -31,19 +31,36 @@ namespace AlquilerVideo.Controllers
         }
 
         // GET: Pelicula/Create
-        public ActionResult Insertar()
+        public ActionResult Index()
         {
-            pelis = datos.Pelicula.Find(e => true).ToList();
+            List<Pelicula> listaPeliculas = datos.Pelicula.Find(e => true).ToList();
             var _pelicula = datos.Pelicula;
             var peliculas = _pelicula.AsQueryable();
-            //ViewBag.generos = generos;
-            ViewBag.peliculas = new SelectList(pelis);
+            if(TempData["detallePelicula"] == null)
+            {
+                ViewBag.peliculasList = new List<Pelicula>();
+            }
+            else
+            {
+                ViewBag.peliculasList = TempData["detallePelicula"];
+            }
+
+
+            List<SelectListItem> listaTitulos = new List<SelectListItem>();
+            foreach (Pelicula pelicula in listaPeliculas)
+            {
+                listaTitulos.Add(new SelectListItem() { Text = pelicula.titulo, Value = pelicula._id});
+            }
+            
+
+            SelectList mostrar = new SelectList(listaTitulos, "Value", "Text", 2);
+            ViewBag.peliculas = mostrar;
             return View();
         }
 
         // POST: Pelicula/Create
         [HttpPost]
-        public ActionResult Insertar(Transaccion parmTransaccion)
+        public ActionResult Index(Transaccion parmTransaccion)
         {
             try
             {
@@ -56,6 +73,56 @@ namespace AlquilerVideo.Controllers
                 return View();
             }
         }
+
+
+        // GET: Pelicula/Edit/5
+        public ActionResult AgregarDetalle(Transaccion collection)
+        {
+            try
+            {
+                List<Pelicula> Peliculas = new List<Pelicula>();
+
+
+                var _pelicula = datos.Pelicula;
+                var peliculas = _pelicula.AsQueryable();
+                var laPelicuala = _pelicula.Find<Pelicula>(a => a._id == collection.tempPelicula).FirstOrDefault();
+                
+                
+                //TempData["detallePelicula"] = peliculas.ToList();
+
+                if(TempData["detallePelicula"] == null)
+                {
+                    TempData["detallePelicula"] = Peliculas;
+                }
+               
+                Peliculas = (List<Pelicula>) TempData["detallePelicula"];
+
+                Peliculas.Add(laPelicuala);
+                TempData["detallePelicula"] = Peliculas;
+
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+        // POST: Pelicula/Edit/5
+        [HttpPost]
+        public ActionResult AgregarDetalle(string collection)
+        {
+            try
+            {
+            
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
 
         // GET: Pelicula/Edit/5
         public ActionResult Edit(int id)
@@ -71,6 +138,20 @@ namespace AlquilerVideo.Controllers
             {
                 // TODO: Add update logic here
 
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+        // GET: Pelicula/Delete/5
+        public ActionResult borrarDetalle()
+        {
+            try
+            {
+                TempData["detallePelicula"] = new List<Pelicula>();
                 return RedirectToAction("Index");
             }
             catch
