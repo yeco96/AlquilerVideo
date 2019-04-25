@@ -35,8 +35,19 @@ namespace AlquilerVideo.Controllers
 
             var _genero = datos.Genero;
             var generos = _genero.AsQueryable();
+
+
+            List<SelectListItem> listaTitulos = new List<SelectListItem>();
+            var _generos = generos.ToList();
+            foreach (Genero genero in _generos)
+            {
+                listaTitulos.Add(new SelectListItem() { Text = genero.genero, Value = genero.genero });
+            }
+            SelectList mostrar = new SelectList(listaTitulos, "Value", "Text", 2);
+            ViewBag.generos = mostrar;
+
             //ViewBag.generos = generos;
-            ViewBag.generos = new SelectList(new List<Object> { new { value = "Red", text = "Red" }, new { value = "Blue", text = "Blue" }, new { value = "Green", text = "Green" } }, "value", "text", 2);
+            //ViewBag.generos = new SelectList(new List<Object> { new { value = "Red", text = "Red" }, new { value = "Blue", text = "Blue" }, new { value = "Green", text = "Green" } }, "value", "text", 2);
             return View();
         }
 

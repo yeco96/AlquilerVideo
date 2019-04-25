@@ -5,10 +5,9 @@
     ViewBag.Title = "Transacciones";
 }
 
-<h2>Index</h2>
-<p>
-    @Html.ActionLink("Create New", "Transacciones")
-</p>
+<br />
+<br />
+
 @using (Html.BeginForm())
 {
     string elSearchString = string.Empty;
@@ -17,12 +16,12 @@
         elSearchString = ViewBag.SearchString;
     }
     <p>
-        Find by name: @Html.TextBox("SearchString",
-       elSearchString, new { @placeholder = "Search criteria..." } )
+        Buscar: @Html.TextBox("SearchString",
+       elSearchString, new { @placeholder = "..........." } )
         <input type="submit" value="Search" />
     </p>
 }
-
+    <br />
 <table class="table">
     <tr>
         <th>

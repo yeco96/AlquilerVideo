@@ -8,6 +8,11 @@ namespace AlquilerVideo.Models
 {
     public class Genero
     {
+
+        [BsonId(IdGenerator = typeof(StringObjectIdGenerator))]
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string _id { get; set; }
+
         public string genero { get; set; }
     }
 }

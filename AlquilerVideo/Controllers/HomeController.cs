@@ -1,16 +1,12 @@
 ﻿using AlquilerVideo.BD;
 using AlquilerVideo.Models;
 using MongoDB.Driver;
-using MongoDB.Bson;
-using AlquilerVideo.Models;
-using AlquilerVideo.Controllers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using MongoDB.Driver.Linq;
-using PagedList;
+
 
 namespace AlquilerVideo.Controllers
 {
@@ -53,7 +49,7 @@ namespace AlquilerVideo.Controllers
                 searchString = currentFilter;
             }
             ViewBag.CurrentFilter = searchString;
-            int pageSize = 3;
+     
             int pageNumber = (page ?? 1);
             var trans = datos.Transaccion;
             var lasTransacciones = trans.AsQueryable();
@@ -96,7 +92,22 @@ namespace AlquilerVideo.Controllers
             try
             {
                 var transaccion = datos.Transaccion;
+
+                if (TempData["detallePelicula"] == null)
+                {
+                    ViewBag.peliculasList = new List<Pelicula>();
+                }
+                else
+                {
+                    ViewBag.peliculasList = TempData["detallePelicula"];
+                }
+
+                parmTransaccion.detallePelicula = new List<Pelicula>(ViewBag.peliculasList);
+                parmTransaccion.fechaTransaccion = new DateTime();
                 transaccion.InsertOne(parmTransaccion);
+
+                ViewBag.peliculasList = new List<Pelicula>();
+                TempData["detallePelicula"] = ViewBag.peliculasList;
                 return RedirectToAction("Index");
             }
             catch

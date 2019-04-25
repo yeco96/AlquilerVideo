@@ -5,10 +5,8 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>LasPeliculas</h2>
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+<h2>Peliculas de la Transacción</h2>
+
 <table class="table">
     <tr>
         <th>
@@ -26,7 +24,6 @@
         <th>
             @Html.DisplayNameFor(model => model.mayorEdad)
         </th>
-        <th></th>
     </tr>
 
     @foreach (var item in Model)
@@ -46,12 +43,7 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.mayorEdad)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-        </td>
+        </td>      
     </tr>
     }
 
