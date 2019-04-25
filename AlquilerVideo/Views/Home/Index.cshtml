@@ -29,23 +29,29 @@
                 <div class="col-xs-4 ">
                     <div class="form-group">
                         @*@Html.LabelFor(model => model.fechaRegreso, htmlAttributes: new { @class = "control-label col-md-2" })*@
+                        <label class="col-md-12">Fecha Regreso:</label>
                         <div class="">
-                            @Html.EditorFor(model => model.fechaTransaccion, new { htmlAttributes = new { @class = "form-control", Value = @ViewData["fechaActual"], @type = "date" } })
-                            @Html.ValidationMessageFor(model => model.fechaTransaccion, "", new { @class = "text-danger" })
+                            @Html.EditorFor(model => model.fechaRegreso, new { htmlAttributes = new { @class = "form-control", Value = @ViewData["fechaActual"], @type = "date" } })
+                            @Html.ValidationMessageFor(model => model.fechaRegreso, "", new { @class = "text-danger" })
                         </div>
                     </div>
                 </div>
                 <div class="col-xs-4">
+
                     <div class="form-group">
-                        @*@Html.LabelFor(model => model.tipoMovimiento, htmlAttributes: new { @class = "control-label col-md-2" })*@
-                        <div class="">
-                            @Html.EditorFor(model => model.tipoMovimiento, new { htmlAttributes = new { @class = "form-control", placeholder = "Tipo Movimiento" } })
+                        <label class="col-md-4">Movimiento:</label>
+                        <div class="col-md-10">
+                            @Html.DropDownList("tipoMovimiento",
+                              (SelectList)ViewBag.movimientos,
+                               new { @class = "form-control" })
                             @Html.ValidationMessageFor(model => model.tipoMovimiento, "", new { @class = "text-danger" })
                         </div>
                     </div>
+
                 </div>
                 <div class="col-xs-4">
                     <div class="form-group">
+
                         <div class="col-md-offset-10 col-md-2">
                             <input type="submit" value="Facturar" class="btn btn-default" />
                         </div>
@@ -54,6 +60,11 @@
             </div>
         </div>
     </div>
+
+    <br /> <br /> <br />
+
+
+
 
     @*<div class="row">
                 <div class="col-xs-4 ">
@@ -90,6 +101,8 @@
 
 @using (Html.BeginForm("AgregarDetalle", "Home", new { }, FormMethod.Get))
 {
+    <label>Pelicula</label>
+    <br />
     <div class="row">
         <div class="col-xs-4">
             @*<div class="form-group">
@@ -102,10 +115,10 @@
                 </div>*@
 
             <div class="form-group">
-
+                
                 <div class="">
                     @Html.DropDownList("tempPelicula",
-                      (SelectList) ViewBag.peliculas,
+                      (SelectList)ViewBag.peliculas,
                        new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.tempPelicula, "", new { @class = "text-danger" })
                 </div>
@@ -182,11 +195,11 @@
                 @Html.DisplayFor(modelItem => item.director)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.mayorEdad)
+                @Html.DisplayFor(modelItem => item.calificacion)
             </td>
             @*<td>
-                @Html.ActionLink("Borrar Detalle", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>*@
+                    @Html.ActionLink("Borrar Detalle", "Delete", new { /* id=item.PrimaryKey */ })
+                </td>*@
 
         </tr>
     }

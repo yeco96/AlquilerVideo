@@ -35,6 +35,6 @@ namespace AlquilerVideo.Models
 
         [Required]
         [DisplayName("Calificacion")]
-        public bool mayorEdad { get; set; }
+        public string calificacion { get; set; }
     }
 }

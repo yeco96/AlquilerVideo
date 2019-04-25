@@ -17,7 +17,7 @@ namespace AlquilerVideo.Models
 
         [Required]
         [DisplayName("Fecha Alquiler")]
-        public DateTime fechaRegreso { get; set; }
+        public DateTime? fechaRegreso { get; set; }
 
         [Required]
         [DisplayName("Tipo Movimiento")]

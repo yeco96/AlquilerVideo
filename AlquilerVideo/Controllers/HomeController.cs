@@ -82,6 +82,8 @@ namespace AlquilerVideo.Controllers
             SelectList mostrar = new SelectList(listaTitulos, "Value", "Text", 2);
             ViewBag.peliculas = mostrar;
 
+            ViewBag.movimientos = new SelectList(new List<Object> { new { value = "Salida Alquiler", text = "Salida Alquiler" }, new { value = "Entrada Alquiler", text = "Entrada Alquiler" }, new { value = "Venta", text = "Venta" } }, "value", "text", 2);
+
             return View();
         }
 
@@ -103,7 +105,13 @@ namespace AlquilerVideo.Controllers
                 }
 
                 parmTransaccion.detallePelicula = new List<Pelicula>(ViewBag.peliculasList);
-                parmTransaccion.fechaTransaccion = new DateTime();
+                parmTransaccion.fechaTransaccion = DateTime.Now;
+
+                if (parmTransaccion.tipoMovimiento == "Venta")
+                {
+                    parmTransaccion.fechaRegreso = null;
+                }
+
                 transaccion.InsertOne(parmTransaccion);
 
                 ViewBag.peliculasList = new List<Pelicula>();

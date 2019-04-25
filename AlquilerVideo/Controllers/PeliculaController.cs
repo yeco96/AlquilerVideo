@@ -47,7 +47,7 @@ namespace AlquilerVideo.Controllers
             ViewBag.generos = mostrar;
 
             //ViewBag.generos = generos;
-            //ViewBag.generos = new SelectList(new List<Object> { new { value = "Red", text = "Red" }, new { value = "Blue", text = "Blue" }, new { value = "Green", text = "Green" } }, "value", "text", 2);
+            ViewBag.calificacion = new SelectList(new List<Object> { new { value = "+4", text = "+4" }, new { value = "+13", text = "+13" }, new { value = "+16", text = "+16" }, new { value = "+18", text = "+18" } }, "value", "text", 2);
             return View();
         }
 
