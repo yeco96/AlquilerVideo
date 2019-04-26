@@ -29,6 +29,7 @@ namespace AlquilerVideo.Models
         public Cliente cliente { get; set; }
 
         public string tempPelicula { get; set; }
+        public string tempCliente { get; set; }
 
     }
 }

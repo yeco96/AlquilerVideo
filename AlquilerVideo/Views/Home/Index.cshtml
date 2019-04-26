@@ -2,6 +2,8 @@
 @using AlquilerVideo.Models
 
 @{
+    /**/
+
     ViewBag.Title = "Insertar";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -50,6 +52,7 @@
 
                 </div>
                 <div class="col-xs-4">
+
                     <div class="form-group">
 
                         <div class="col-md-offset-10 col-md-2">
@@ -115,7 +118,7 @@
                 </div>*@
 
             <div class="form-group">
-                
+
                 <div class="">
                     @Html.DropDownList("tempPelicula",
                       (SelectList)ViewBag.peliculas,
@@ -140,73 +143,67 @@
                 <div>
                     <input type="button" value="Borrar Detalle" class="btn btn-default" onclick="location.href='@Url.Action("borrarDetalle", "Home")'" />
                 </div>
-            </div>
 
+            </div>
         </div>
     </div>
-
 }
 
-
-
-<h2>Detalle Transacción</h2>
-<table class="table">
-
-    <tr>
-        <th>
-            Titulo
-        </th>
-        <th>
-            Genero
-        </th>
-        <th>
-            Año
-        </th>
-        <th>
-            Precio
-        </th>
-        <th>
-            Director
-        </th>
-        <th>
-            Calificación
-        </th>
-        @*<th></th>*@
-    </tr>
+            <tr>
+                <th>
+                    Titulo
+                </th>
+                <th>
+                    Genero
+                </th>
+                <th>
+                    Año
+                </th>
+                <th>
+                    Precio
+                </th>
+                <th>
+                    Director
+                </th>
+                <th>
+                    Calificación
+                </th>
+                @*<th></th>*@
+            </tr>
 
 
 
-    @foreach (Pelicula item in ViewBag.peliculasList)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.titulo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.genero)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.anno)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.precio)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.director)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.calificacion)
-            </td>
-            @*<td>
-                    @Html.ActionLink("Borrar Detalle", "Delete", new { /* id=item.PrimaryKey */ })
-                </td>*@
+            @foreach (Pelicula item in ViewBag.peliculasList)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.titulo)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.genero)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.anno)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.precio)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.director)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.calificacion)
+                    </td>
+                    @*<td>
+                        @Html.ActionLink("Borrar Detalle", "Delete", new { /* id=item.PrimaryKey */ })
+                    </td>*@
 
-        </tr>
-    }
+                </tr>
+            }
 
-</table>
+        </table>
 
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+        @section Scripts {
+            @Scripts.Render("~/bundles/jqueryval")
+        }

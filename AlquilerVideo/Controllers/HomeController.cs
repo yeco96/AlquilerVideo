@@ -59,10 +59,9 @@ namespace AlquilerVideo.Controllers
                 lasTransacciones = lasTransacciones.Where(e => e.tipoMovimiento.ToUpper().Contains(searchString.ToUpper()));
             }
             
-            ViewBag.SearchString = searchString;
+            ViewBag.SearchString = searchString;                               
 
-
-            List < Pelicula > listaPeliculas = datos.Pelicula.Find(e => true).ToList();
+            List< Pelicula > listaPeliculas = datos.Pelicula.Find(e => true).ToList();
             var _pelicula = datos.Pelicula;
             var peliculas = _pelicula.AsQueryable();
             if(TempData["detallePelicula"] == null)
@@ -83,6 +82,31 @@ namespace AlquilerVideo.Controllers
             ViewBag.peliculas = mostrar;
 
             ViewBag.movimientos = new SelectList(new List<Object> { new { value = "Salida Alquiler", text = "Salida Alquiler" }, new { value = "Entrada Alquiler", text = "Entrada Alquiler" }, new { value = "Venta", text = "Venta" } }, "value", "text", 2);
+
+            //**********************************
+            //Lista de Clientes
+            List<Cliente> listaClientes = datos.Cliente.Find(e => true).ToList();
+            var _cliente = datos.Cliente;
+            var clientes = _cliente.AsQueryable();
+            if (TempData["detalleCliente"] == null)
+            {
+                ViewBag.clientesList = new List<Cliente>();
+            }
+            else
+            {
+                ViewBag.clientesList = TempData["detalleCliente"];
+            }
+            
+            List<SelectListItem> listaNombres = new List<SelectListItem>();
+            foreach (Cliente cliente in listaClientes)
+            {
+                listaNombres.Add(new SelectListItem() { Text = cliente.Nombre, Value = cliente._id });
+            }
+            //ViewData["fechaActual"] = DateTime.Now.ToString();
+            SelectList mostrarclientes = new SelectList(listaNombres, "Value", "Text", 2);
+            ViewBag.clientes = mostrarclientes;
+
+            //********************************    
 
             return View();
         }
@@ -133,14 +157,14 @@ namespace AlquilerVideo.Controllers
                 List<Pelicula> Peliculas = new List<Pelicula>();
 
 
+
                 var _pelicula = datos.Pelicula;
                 var peliculas = _pelicula.AsQueryable();
                 var laPelicuala = _pelicula.Find<Pelicula>(a => a._id == collection.tempPelicula).FirstOrDefault();
-                
-                
+
                 //TempData["detallePelicula"] = peliculas.ToList();
 
-                if(TempData["detallePelicula"] == null)
+                if (TempData["detallePelicula"] == null)
                 {
                     TempData["detallePelicula"] = Peliculas;
                 }

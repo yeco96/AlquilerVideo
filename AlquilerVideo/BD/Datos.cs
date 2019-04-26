@@ -44,5 +44,14 @@ namespace AlquilerVideo.BD
             }
         }
 
+        public IMongoCollection<Cliente> Cliente
+        {
+            get
+            {
+                return (contexto.database.GetCollection<Cliente>("Cliente"));
+            }
+        }
+
+
     }
 }
