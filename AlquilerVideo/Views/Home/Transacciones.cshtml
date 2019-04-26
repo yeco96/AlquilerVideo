@@ -10,7 +10,7 @@
 
 @using (Html.BeginForm())
 {
-    string elSearchString = string.Empty;
+    @*string elSearchString = string.Empty;
     if (!string.IsNullOrEmpty(ViewBag.SearchString))
     {
         elSearchString = ViewBag.SearchString;
@@ -19,7 +19,7 @@
         Buscar: @Html.TextBox("SearchString",
        elSearchString, new { @placeholder = "..........." } )
         <input type="submit" value="Search" />
-    </p>
+    </p>*@
 }
     <br />
 <table class="table">
